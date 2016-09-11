@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<windows.h>
+
+float CalcularFuerza(int ligas, float distancia)
+{
+	float k=1.0;
+	return k*ligas*distancia;
+}
+
+float CalcularAlcanceY(float Fuerza)
+{
+	float g = -9.81, c = 0, t = 0, y = 0, m = 0.056;
+	while(c<=y)
+	{
+		c = y;
+		y = Fuerza/m*sin(45*3.14159/180)*t + 0.5*g*(t*t);
+		t+=0.001;
+	}
+	return c;
+}
+
+float CalcularTiempo(float Fuerza)
+{
+	float g = -9.81, c = 0, t = 0, y = 0, m = 0.056;
+	while(c<=y)
+	{
+		c = y;
+		y = Fuerza/m*sin(45*3.14159/180)*t + 0.5*g*(t*t);
+		t+=0.001;
+	}
+	return 2*(t-0.001);
+}
+
+float CalcularAlcanceX(float Fuerza, float tiempo)
+{
+	float m = 0.056;
+	return Fuerza/m*cos(45*3.14159/180)*tiempo;
+}
+
+void intro()
+{
+	puts("Bienvenido, este es programa que otorga los resultados");
+	puts("de ecuaciones fisicas y matematicas acerca de una catapulta.");
+	getch();
+	system("cls");
+	puts("Por favor elija una de las siguientes opciones");
+	puts(" ¿Que tipo de catapulta usa?");
+	puts("\n   1  De tension");
+	puts("   2  De torsion");
+	puts("   3  De contrapeso");
+	puts("   4  Default");
+}
+
+main()
+{
+	int cond=0, c=0;
+	float F=0, l=0, t=0, d=0;
+	intro();
+	puts("\n\n      La opcion por default es para el proyecto METP");
+	scanf("%d", & cond);
+	system("cls");
+	
+	while(c==0)
+	{
+		switch(cond)
+		{
+			case 1: 
+					break;
+			case 2: 
+					break;
+			case 3: 
+					break;
+			default:d=0.15;
+					system("cls");
+					printf("   Dame el numero de ligas a usar: ");
+					scanf("%f", & l);
+					F=CalcularFuerza(l, d);
+					printf("\n   Fuerza de lanzamiento: %.2f N", F);
+					printf("\n   Alcance en el eje Y:   %.2f m", CalcularAlcanceY(F));
+					t=CalcularTiempo(F);
+					printf("\n   Tiempo total:          %.2f s", t);
+					printf("\n   Alcance en el eje X:   %.2f m", CalcularAlcanceX(F, t));
+					break;
+		}
+		puts("\n\n   ¿Desea volver al menu de seleccion?");
+		puts("\n   0 = Sí / otro = No");
+		scanf("%d", & c);
+	}
+}
